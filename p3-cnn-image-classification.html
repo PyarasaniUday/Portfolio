@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Case study of CNN Image Classification, a deep learning computer vision model built with Python, TensorFlow, Keras, NumPy, Matplotlib, and CIFAR-10.">
+    <meta name="keywords"
+        content="Convolutional Neural Network, CNN, Image Classification, TensorFlow, CIFAR-10, Computer Vision, Deep Learning">
+    <meta name="author" content="Pyarasani Uday Kumar">
+    <title>CNN Image Classification | Pyarasani Uday Kumar</title>
+
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Details Page Specific Case Study Styles */
+        .case-study-hero {
+            padding-top: 140px;
+            padding-bottom: 60px;
+            text-align: center;
+            position: relative;
+        }
+
+        .btn-back {
+            margin-bottom: 24px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--neon-cyan);
+            text-decoration: none;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            transition: var(--transition-fast);
+        }
+
+        .btn-back:hover {
+            text-shadow: 0 0 8px var(--neon-cyan);
+            transform: translateX(-4px);
+        }
+
+        .hero-badges {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 20px 0 30px 0;
+        }
+
+        .hero-badge {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .case-study-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 45px;
+            margin-top: 40px;
+            align-items: stretch;
+        }
+
+        @media (max-width: 992px) {
+            .case-study-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Feature Cards Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-top: 30px;
+        }
+
+        .feature-item-card {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            height: 100%;
+        }
+
+        .feature-icon-wrapper {
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            background: rgba(0, 240, 255, 0.05);
+            border: 1px solid rgba(0, 240, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: var(--neon-cyan);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
+        }
+
+        /* Tech Stack Card Grid */
+        .tech-stack-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+            margin-top: 35px;
+        }
+
+        .tech-card-group {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .tech-badge-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tech-badge-item {
+            font-family: var(--font-heading);
+            font-weight: 550;
+            font-size: 0.85rem;
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tech-badge-item:hover {
+            color: var(--neon-cyan);
+            border-color: var(--border-glass-hover);
+            background: rgba(0, 240, 255, 0.02);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Screenshot / Demo Section Styling */
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 992px) {
+            .screenshot-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Modern Browser frame mockup */
+        .browser-mockup {
+            background: #090b11;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            box-shadow: 0 20px 45px rgba(0, 240, 255, 0.08), 0 0 20px rgba(0, 0, 0, 0.8);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition-smooth);
+        }
+
+        .browser-mockup:hover {
+            border-color: rgba(0, 240, 255, 0.25);
+            box-shadow: 0 25px 50px rgba(0, 240, 255, 0.15);
+        }
+
+        .browser-header {
+            background: rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .browser-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .browser-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .browser-dot.red {
+            background: #ff5f56;
+        }
+
+        .browser-dot.yellow {
+            background: #ffbd2e;
+        }
+
+        .browser-dot.green {
+            background: #27c93f;
+        }
+
+        .browser-address {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            padding: 4px 24px;
+            width: 60%;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .browser-body {
+            position: relative;
+            aspect-ratio: 16 / 10;
+            overflow: hidden;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .browser-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .browser-mockup:hover .browser-img {
+            transform: scale(1.03);
+        }
+
+        /* Outcomes Cards */
+        .outcomes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 30px;
+        }
+
+        .outcome-card {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            height: 100%;
+        }
+
+        .outcome-icon-wrapper {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(112, 0, 255, 0.05);
+            border: 1px solid rgba(112, 0, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: var(--neon-purple);
+            flex-shrink: 0;
+            box-shadow: 0 0 10px rgba(112, 0, 255, 0.1);
+        }
+
+        /* Lightbox Modal Styles */
+        .lightbox-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(3, 3, 6, 0.95);
+            backdrop-filter: blur(10px);
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 85%;
+            border: 2px solid rgba(0, 240, 255, 0.3);
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.2);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .lightbox-modal.active .lightbox-content {
+            transform: scale(1);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 2rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .lightbox-close:hover {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 8px var(--neon-cyan);
+        }
+
+        .lightbox-caption {
+            position: absolute;
+            bottom: 30px;
+            color: var(--text-secondary);
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            text-align: center;
+            background: rgba(10, 11, 20, 0.8);
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Canvas particle background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Sticky Navigation Bar -->
+    <header class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="index.html#home" class="logo" aria-label="Home">
+                <span>&lt;/&gt;</span> Uday Kumar
+            </a>
+
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle Navigation Menu" aria-controls="nav-links"
+                aria-expanded="false">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#projects" class="active">Projects</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Details Section -->
+        <section class="case-study-hero">
+            <div class="container">
+                <a href="index.html#projects" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Back to
+                    Portfolio</a>
+                <span class="hero-welcome">Project Case Study // Computer Vision</span>
+                <h1 class="hero-title text-neon-glow" style="font-size: 3.5rem;">CNN Image Classification</h1>
+                <p class="hero-tagline" style="margin: 15px auto 0 auto; max-width: 650px;">
+                    A deep learning classifier leveraging Convolutional Neural Networks (CNN) trained on CIFAR-10 to identify objects across 10 categories with real-time confidence mapping.
+                </p>
+
+                <div class="hero-badges">
+                    <span class="hero-badge"
+                        style="background: rgba(0, 114, 255, 0.15); color: #3b82f6; border: 1px solid rgba(0, 114, 255, 0.3);">Python</span>
+                    <span class="hero-badge"
+                        style="background: rgba(112, 0, 255, 0.15); color: #a855f7; border: 1px solid rgba(112, 0, 255, 0.3);">TensorFlow</span>
+                    <span class="hero-badge"
+                        style="background: rgba(236, 72, 153, 0.15); color: #ec4899; border: 1px solid rgba(236, 72, 153, 0.3);">Keras</span>
+                    <span class="hero-badge"
+                        style="background: rgba(0, 240, 255, 0.1); color: var(--neon-cyan); border: 1px solid rgba(0, 240, 255, 0.25);">CIFAR-10</span>
+                    <span class="hero-badge"
+                        style="background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3);">Matplotlib</span>
+                </div>
+
+                <div class="cta-group" style="justify-content: center; margin-top: 10px;">
+                    <a href="https://github.com/PyarasaniUday/CNN-Image-Classification" target="_blank"
+                        class="btn btn-primary"><i class="fa-brands fa-github"></i> View Source Code</a>
+                    <a href="index.html#projects" class="btn btn-secondary">Back to Portfolio</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Overview & Solution -->
+        <section id="overview" style="padding-top: 40px; padding-bottom: 60px;">
+            <div class="container">
+                <div class="case-study-grid">
+                    <!-- Project Overview -->
+                    <div class="glass-panel reveal">
+                        <h2 class="section-title" style="font-size: 1.75rem; margin-bottom: 24px;"><span>//</span> 1.
+                            Project Overview</h2>
+                        <p style="color: var(--text-secondary); font-size: 1rem; line-height: 1.7;">
+                            This project implements a Convolutional Neural Network (CNN) based Image Classifier designed to recognize and identify objects in images. The classifier parses color pixels and organizes predictions across 10 distinct CIFAR-10 categories, including automobiles, dogs, cats, airplanes, and birds, providing automated tags for digital images.
+                        </p>
+                    </div>
+
+                    <!-- The Solution -->
+                    <div class="glass-panel reveal reveal-delay-1">
+                        <h2 class="section-title" style="font-size: 1.75rem; margin-bottom: 24px;"><span>//</span> 2.
+                            The Solution</h2>
+                        <p style="color: var(--text-secondary); font-size: 1rem; line-height: 1.7;">
+                            I structured a custom deep learning classifier trained using the benchmark CIFAR-10 dataset. The CNN model extracts spatial patterns through successive convolutional, pooling, and dense layers built using TensorFlow and Keras. The resulting model preprocessing pipeline can ingest user images, return class labels, render confidence graphs, and analyze classification statistics.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Features -->
+        <section id="features" style="padding: 80px 0;">
+            <div class="container">
+                <h2 class="section-title reveal"><span>03.</span> Key Features</h2>
+                <p style="color: var(--text-secondary); max-width: 600px; margin-bottom: 40px; margin-top: -30px;">
+                    Designed with advanced computer vision pipeline features:
+                </p>
+
+                <div class="features-grid">
+                    <!-- Feature 1 -->
+                    <div class="glass-panel feature-item-card reveal">
+                        <div class="feature-icon-wrapper"><i class="fa-solid fa-layer-group"></i></div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.25rem;">🧠 CNN Architecture</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                            Utilizes sequential 2D convolutional and pooling layers optimized to extract high-level visual features.
+                        </p>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="glass-panel feature-item-card reveal reveal-delay-1">
+                        <div class="feature-icon-wrapper"><i class="fa-solid fa-shapes"></i></div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.25rem;">🖼️ Multi-Class Classification</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                            Categorizes inputs among 10 distinct object classes with softmax probability distributions.
+                        </p>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="glass-panel feature-item-card reveal reveal-delay-2">
+                        <div class="feature-icon-wrapper"><i class="fa-solid fa-database"></i></div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.25rem;">📊 CIFAR-10 Training</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                            Trained and cross-validated using the benchmark 60,000 tiny image CIFAR-10 dataset.
+                        </p>
+                    </div>
+
+                    <!-- Feature 4 -->
+                    <div class="glass-panel feature-item-card reveal reveal-delay-3">
+                        <div class="feature-icon-wrapper"><i class="fa-solid fa-eye"></i></div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.25rem;">🎯 Object Recognition</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                            Performs spatial feature mapping to distinguish shapes, edges, and object textures.
+                        </p>
+                    </div>
+
+                    <!-- Feature 5 -->
+                    <div class="glass-panel feature-item-card reveal">
+                        <div class="feature-icon-wrapper"><i class="fa-solid fa-chart-line"></i></div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.25rem;">📈 Accuracy Evaluation</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                            Generates metrics including training curves, confusion matrices, and validation reports.
+                        </p>
+                    </div>
+
+                    <!-- Feature 6 -->
+                    <div class="glass-panel feature-item-card reveal reveal-delay-1">
+                        <div class="feature-icon-wrapper"><i class="fa-solid fa-upload"></i></div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.25rem;">🔍 Custom Image Input</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                            Enables users to upload custom jpeg/png files to obtain instant computer vision tags.
+                        </p>
+                    </div>
+
+                    <!-- Feature 7 -->
+                    <div class="glass-panel feature-item-card reveal reveal-delay-2">
+                        <div class="feature-icon-wrapper"><i class="fa-solid fa-gauge-high"></i></div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.25rem;">⚡ Confidence Scores</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                            Displays a confidence percentage bar highlighting the likelihood profile for each predictions.
+                        </p>
+                    </div>
+
+                    <!-- Feature 8 -->
+                    <div class="glass-panel feature-item-card reveal reveal-delay-3">
+                        <div class="feature-icon-wrapper"><i class="fa-solid fa-robot"></i></div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.25rem;">🤖 Deep Learning Pipeline</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                            Structured preprocessing including normalization, tensor reshaping, and batch normalization layers.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Stack -->
+        <section id="tech-stack" style="padding: 80px 0; background: rgba(10, 11, 20, 0.15);">
+            <div class="container">
+                <h2 class="section-title reveal"><span>04.</span> Tech Stack</h2>
+                <p style="color: var(--text-secondary); max-width: 600px; margin-bottom: 20px; margin-top: -30px;">
+                    Formulated using robust scientific libraries and data processing tools:
+                </p>
+
+                <div class="tech-stack-container">
+                    <!-- Tech Group 1 -->
+                    <div class="glass-panel tech-card-group reveal">
+                        <h3 style="font-family: var(--font-heading); font-size: 1.15rem; color: var(--neon-cyan); border-bottom: 1px solid rgba(0,240,255,0.1); padding-bottom: 8px;"><i class="fa-solid fa-terminal"></i> Core Language</h3>
+                        <div class="tech-badge-list">
+                            <span class="tech-badge-item"><i class="fa-brands fa-python" style="color: #3b82f6;"></i> Python</span>
+                        </div>
+                    </div>
+
+                    <!-- Tech Group 2 -->
+                    <div class="glass-panel tech-card-group reveal reveal-delay-1">
+                        <h3 style="font-family: var(--font-heading); font-size: 1.15rem; color: var(--neon-cyan); border-bottom: 1px solid rgba(0,240,255,0.1); padding-bottom: 8px;"><i class="fa-solid fa-gears"></i> Deep Learning</h3>
+                        <div class="tech-badge-list">
+                            <span class="tech-badge-item"><i class="fa-solid fa-microchip" style="color: #ea580c;"></i> TensorFlow</span>
+                            <span class="tech-badge-item"><i class="fa-solid fa-network-wired" style="color: #e11d48;"></i> Keras</span>
+                        </div>
+                    </div>
+
+                    <!-- Tech Group 3 -->
+                    <div class="glass-panel tech-card-group reveal reveal-delay-2">
+                        <h3 style="font-family: var(--font-heading); font-size: 1.15rem; color: var(--neon-cyan); border-bottom: 1px solid rgba(0,240,255,0.1); padding-bottom: 8px;"><i class="fa-solid fa-calculator"></i> Data Science</h3>
+                        <div class="tech-badge-list">
+                            <span class="tech-badge-item"><i class="fa-solid fa-hashtag" style="color: #0d9488;"></i> NumPy</span>
+                            <span class="tech-badge-item"><i class="fa-solid fa-database" style="color: #ef4444;"></i> CIFAR-10</span>
+                        </div>
+                    </div>
+
+                    <!-- Tech Group 4 -->
+                    <div class="glass-panel tech-card-group reveal reveal-delay-3">
+                        <h3 style="font-family: var(--font-heading); font-size: 1.15rem; color: var(--neon-cyan); border-bottom: 1px solid rgba(0,240,255,0.1); padding-bottom: 8px;"><i class="fa-solid fa-chart-simple"></i> Visualization & Tools</h3>
+                        <div class="tech-badge-list">
+                            <span class="tech-badge-item"><i class="fa-solid fa-chart-line" style="color: #22c55e;"></i> Matplotlib</span>
+                            <span class="tech-badge-item"><i class="fa-brands fa-git-alt" style="color: #f97316;"></i> Git</span>
+                            <span class="tech-badge-item"><i class="fa-brands fa-github" style="color: var(--text-primary);"></i> GitHub</span>
+                            <span class="tech-badge-item"><i class="fa-solid fa-code" style="color: #007acc;"></i> VS Code</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Screenshots & Interactive Gallery Section -->
+        <section id="demo" style="padding: 80px 0;">
+            <div class="container">
+                <h2 class="section-title reveal"><span>05.</span> Screenshots & Interactive Gallery</h2>
+                <p style="color: var(--text-secondary); max-width: 600px; margin-bottom: 40px; margin-top: -30px;">
+                    Explore the image prediction results, confidence score indicators, and CNN layers pipeline. Click on any screenshot to view it in full resolution:
+                </p>
+
+                <div class="screenshot-grid" style="margin-bottom: 50px;">
+                    <!-- Demo Screenshot -->
+                    <div class="browser-mockup reveal gallery-trigger" style="cursor: pointer;" src="Project_Images/CNN Image Clasification/Demo.png" alt="Prediction Dashboard Demo showing predicted labels and confidence ratings.">
+                        <div class="browser-header">
+                            <div class="browser-dots">
+                                <span class="browser-dot red"></span>
+                                <span class="browser-dot yellow"></span>
+                                <span class="browser-dot green"></span>
+                            </div>
+                            <div class="browser-address">localhost:8501 // Prediction Dashboard Demo</div>
+                            <div style="font-size: 0.8rem; color: var(--neon-cyan);"><i class="fa-solid fa-magnifying-glass-plus"></i> Click to Zoom</div>
+                        </div>
+                        <div class="browser-body">
+                            <img src="Project_Images/CNN Image Clasification/Demo.png" alt="Prediction Dashboard and Classifier Demo" class="browser-img">
+                        </div>
+                    </div>
+
+                    <!-- Pipeline Screenshot -->
+                    <div class="browser-mockup reveal reveal-delay-1 gallery-trigger" style="cursor: pointer;" src="Project_Images/CNN Image Clasification/Pipeline of project.png" alt="CNN Model Training Pipeline & Deep Learning Architecture.">
+                        <div class="browser-header">
+                            <div class="browser-dots">
+                                <span class="browser-dot red"></span>
+                                <span class="browser-dot yellow"></span>
+                                <span class="browser-dot green"></span>
+                            </div>
+                            <div class="browser-address">model-pipeline // CNN Architecture Diagram</div>
+                            <div style="font-size: 0.8rem; color: var(--neon-cyan);"><i class="fa-solid fa-magnifying-glass-plus"></i> Click to Zoom</div>
+                        </div>
+                        <div class="browser-body">
+                            <img src="Project_Images/CNN Image Clasification/Pipeline of project.png" alt="Model Architecture Pipeline" class="browser-img">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Demonstration Subsection -->
+                <div class="reveal" style="max-width: 900px; margin: 0 auto;">
+                    <h3 style="font-family: var(--font-heading); font-size: 1.5rem; margin-bottom: 20px; color: var(--text-primary); text-align: center;"><i class="fa-solid fa-circle-play" style="color: var(--neon-cyan); margin-right: 8px;"></i> Project Demonstration Video</h3>
+                    
+                    <div class="browser-mockup" style="border-color: rgba(0, 240, 255, 0.15); box-shadow: 0 15px 40px rgba(0,240,255,0.06);">
+                        <div class="browser-header">
+                            <div class="browser-dots">
+                                <span class="browser-dot red"></span>
+                                <span class="browser-dot yellow"></span>
+                                <span class="browser-dot green"></span>
+                            </div>
+                            <div class="browser-address">localhost:8501 // CNN Walkthrough Screen Record</div>
+                            <div style="width: 40px;"></div>
+                        </div>
+                        <div class="browser-body" style="aspect-ratio: 16 / 10; background: #000;">
+                            <a href="https://youtu.be/v_vIKjVQVo8?si=0KGDJKQonKir7ybt" target="_blank" class="video-link-wrapper">
+                                <img src="https://img.youtube.com/vi/v_vIKjVQVo8/maxresdefault.jpg" alt="CNN Image Classification Demo" class="browser-img">
+                                <div class="video-play-overlay">
+                                    <div class="play-btn-circle" style="width: 60px; height: 60px;">
+                                        <i class="fa-solid fa-play" style="font-size: 1.5rem; margin-left: 4px;"></i>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <p style="color: var(--text-secondary); text-align: center; margin-top: 15px; font-size: 0.95rem; font-family: var(--font-mono);">
+                        "Demonstration of the CNN Image Classification system built using TensorFlow, Keras, and Deep Learning techniques."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Outcomes -->
+        <section id="outcomes" style="padding: 80px 0; background: rgba(10, 11, 20, 0.2);">
+            <div class="container">
+                <h2 class="section-title reveal"><span>06.</span> Project Outcomes</h2>
+                <p style="color: var(--text-secondary); max-width: 600px; margin-bottom: 40px; margin-top: -30px;">
+                    Core computer vision and model engineering insights acquired through the case study:
+                </p>
+
+                <div class="outcomes-grid">
+                    <!-- Outcome 1 -->
+                    <div class="glass-panel outcome-card reveal">
+                        <div class="outcome-icon-wrapper"><i class="fa-solid fa-graduation-cap"></i></div>
+                        <div>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.15rem; margin-bottom: 6px;">🧠 CNN Architecture</h3>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5;">
+                                Built a strong conceptual understanding of convolutional filters, pooling sizes, activation functions, and output layer shapes.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Outcome 2 -->
+                    <div class="glass-panel outcome-card reveal reveal-delay-1">
+                        <div class="outcome-icon-wrapper"><i class="fa-solid fa-brain"></i></div>
+                        <div>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.15rem; margin-bottom: 6px;">📊 Practical Deep Learning</h3>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5;">
+                                Gained practical hands-on experience in neural network parameter tuning, learning rates, loss functions, and optimization.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Outcome 3 -->
+                    <div class="glass-panel outcome-card reveal reveal-delay-2">
+                        <div class="outcome-icon-wrapper"><i class="fa-solid fa-eye"></i></div>
+                        <div>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.15rem; margin-bottom: 6px;">🖼️ Computer Vision Skills</h3>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5;">
+                                Mastered basic image loading, standard normalization of color channels, image reshaping, and tensor manipulation.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Outcome 4 -->
+                    <div class="glass-panel outcome-card reveal reveal-delay-3">
+                        <div class="outcome-icon-wrapper"><i class="fa-solid fa-robot"></i></div>
+                        <div>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.15rem; margin-bottom: 6px;">🤖 AI Object Recognition</h3>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5;">
+                                Developed custom models executing high accuracy categorization across complex datasets.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Outcome 5 -->
+                    <div class="glass-panel outcome-card reveal">
+                        <div class="outcome-icon-wrapper"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+                        <div>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.15rem; margin-bottom: 6px;">⚡ Model Training & Tuning</h3>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5;">
+                                Learned how to trace validation curves, address overfitting, and structure model checkpoints.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Outcome 6 -->
+                    <div class="glass-panel outcome-card reveal reveal-delay-1">
+                        <div class="outcome-icon-wrapper"><i class="fa-solid fa-rocket"></i></div>
+                        <div>
+                            <h3 style="font-family: var(--font-heading); font-size: 1.15rem; margin-bottom: 6px;">🚀 TensorFlow & Keras</h3>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5;">
+                                Constructed functional deep learning code blocks, linking compilation APIs to fit training routines.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project connections -->
+        <section id="connections" style="padding: 80px 0; text-align: center;">
+            <div class="container">
+                <div class="glass-panel reveal" style="max-width: 700px; margin: 0 auto; padding: 45px 30px;">
+                    <h2 class="section-title text-neon-glow" style="font-size: 2rem; margin-bottom: 15px;">07. Project Connections</h2>
+                    <p style="color: var(--text-secondary); max-width: 500px; margin: 0 auto 35px auto;">
+                        Audit the source code directly or clone the repository to test model checkpoints locally:
+                    </p>
+
+                    <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+                        <a href="https://github.com/PyarasaniUday/CNN-Image-Classification" target="_blank"
+                            class="btn btn-primary"><i class="fa-brands fa-github"></i> View Source Code</a>
+                        <a href="index.html#projects" class="btn btn-tertiary">Back to Portfolio</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content"
+                style="padding-bottom: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.03);">
+                <div class="footer-text">
+                    &copy; 2026 <span>Pyarasani Uday Kumar</span>. Built with passion, consistency, and code.
+                </div>
+                <div class="footer-socials">
+                    <a href="https://www.linkedin.com/in/pyarasani-uday-kumar-9b9190366/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3B1h8UChZWR5uLgJzlyb17Gw%3D%3D"
+                        target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="https://github.com/PyarasaniUday" target="_blank" aria-label="GitHub"><i
+                            class="fa-brands fa-github"></i></a>
+                </div>
+            </div>
+            <div
+                style="margin-top: 15px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-size: 0.8rem; color: var(--text-secondary); font-family: var(--font-mono);">
+                <div>
+                    <i class="fa-regular fa-envelope" style="color: var(--neon-cyan); margin-right: 5px;"></i>
+                    Email: <a href="mailto:udaypyarasani02@gmail.com"
+                        style="color: inherit; text-decoration: none; transition: var(--transition-fast);"
+                        onmouseover="this.style.color='var(--neon-cyan)'"
+                        onmouseout="this.style.color='inherit'">udaypyarasani02@gmail.com</a>
+                </div>
+                <div>
+                    <i class="fa-brands fa-linkedin-in" style="color: var(--neon-cyan); margin-right: 5px;"></i>
+                    LinkedIn: <a
+                        href="https://www.linkedin.com/in/pyarasani-uday-kumar-9b9190366/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3B1h8UChZWR5uLgJzlyb17Gw%3D%3D"
+                        target="_blank"
+                        style="color: inherit; text-decoration: none; transition: var(--transition-fast);"
+                        onmouseover="this.style.color='var(--neon-cyan)'"
+                        onmouseout="this.style.color='inherit'">Connect on LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox Modal container -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const galleryItems = document.querySelectorAll('.gallery-trigger');
+            const lightbox = document.createElement('div');
+            lightbox.className = 'lightbox-modal';
+            lightbox.innerHTML = `
+                <span class="lightbox-close">&times;</span>
+                <img class="lightbox-content" src="" alt="Enlarged Image">
+                <div class="lightbox-caption"></div>
+            `;
+            document.body.appendChild(lightbox);
+
+            const lightboxImg = lightbox.querySelector('.lightbox-content');
+            const lightboxCaption = lightbox.querySelector('.lightbox-caption');
+            const lightboxClose = lightbox.querySelector('.lightbox-close');
+
+            galleryItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const src = item.getAttribute('src');
+                    const alt = item.getAttribute('alt');
+                    lightboxImg.src = src;
+                    lightboxCaption.textContent = alt;
+                    lightbox.classList.add('active');
+                });
+            });
+
+            lightboxClose.addEventListener('click', () => {
+                lightbox.classList.remove('active');
+            });
+
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) {
+                    lightbox.classList.remove('active');
+                }
+            });
+        });
+    </script>
+
+    <!-- JavaScript File -->
+    <script src="script.js"></script>
+</body>
+
+</html>

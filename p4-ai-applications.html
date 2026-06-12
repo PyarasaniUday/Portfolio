@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Case study of the AI Applications Suite, featuring an AI PDF Summarizer, FAQ Chatbot, and Language Translator built using Python, NLP, and Deep Learning.">
+    <meta name="keywords"
+        content="AI, NLP, PDF Summarization, Chatbot, Translation, Python, TensorFlow, Streamlit, Artificial Intelligence">
+    <meta name="author" content="Pyarasani Uday Kumar">
+    <title>AI Applications Suite Case Study | Pyarasani Uday Kumar</title>
+
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Details Page Specific Case Study Styles */
+        .case-study-hero {
+            padding-top: 140px;
+            padding-bottom: 60px;
+            text-align: center;
+            position: relative;
+        }
+
+        .btn-back {
+            margin-bottom: 24px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--neon-cyan);
+            text-decoration: none;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            transition: var(--transition-fast);
+        }
+
+        .btn-back:hover {
+            text-shadow: 0 0 8px var(--neon-cyan);
+            transform: translateX(-4px);
+        }
+
+        .hero-badges {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 20px 0 30px 0;
+        }
+
+        .hero-badge {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .project-section-panel {
+            margin-bottom: 60px;
+        }
+
+        .case-study-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 45px;
+            align-items: center;
+        }
+
+        @media (max-width: 992px) {
+            .case-study-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        /* Tech Stack Card Grid */
+        .tech-badge-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 16px 0;
+        }
+
+        .tech-badge-item {
+            font-family: var(--font-heading);
+            font-weight: 550;
+            font-size: 0.8rem;
+            padding: 6px 12px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tech-badge-item:hover {
+            color: var(--neon-cyan);
+            border-color: var(--border-glass-hover);
+            background: rgba(0, 240, 255, 0.02);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Modern Browser frame mockup */
+        .browser-mockup {
+            background: #090b11;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            box-shadow: 0 20px 45px rgba(0, 240, 255, 0.08), 0 0 20px rgba(0, 0, 0, 0.8);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition-smooth);
+        }
+
+        .browser-mockup:hover {
+            border-color: rgba(0, 240, 255, 0.25);
+            box-shadow: 0 25px 50px rgba(0, 240, 255, 0.15);
+        }
+
+        .browser-header {
+            background: rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .browser-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .browser-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .browser-dot.red {
+            background: #ff5f56;
+        }
+
+        .browser-dot.yellow {
+            background: #ffbd2e;
+        }
+
+        .browser-dot.green {
+            background: #27c93f;
+        }
+
+        .browser-address {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            padding: 4px 24px;
+            width: 60%;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .browser-body {
+            position: relative;
+            aspect-ratio: 16 / 10;
+            overflow: hidden;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .browser-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Canvas particle background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Sticky Navigation Bar -->
+    <header class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="index.html#home" class="logo" aria-label="Home">
+                <span>&lt;/&gt;</span> Uday Kumar
+            </a>
+
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle Navigation Menu" aria-controls="nav-links"
+                aria-expanded="false">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#projects" class="active">Projects</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Details Section -->
+        <section class="case-study-hero">
+            <div class="container">
+                <a href="index.html#projects" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Back to
+                    Portfolio</a>
+                <span class="hero-welcome">Project Case Study // AI Applications Suite</span>
+                <h1 class="hero-title text-neon-glow" style="font-size: 3.5rem;">AI Applications Suite</h1>
+                <p class="hero-tagline" style="margin: 15px auto 0 auto; max-width: 650px;">
+                    A collection of AI-powered applications including PDF Summarization, FAQ Chatbot, and Language Translation built using Python and Natural Language Processing techniques.
+                </p>
+
+                <div class="hero-badges">
+                    <span class="hero-badge"
+                        style="background: rgba(112, 0, 255, 0.15); color: #a855f7; border: 1px solid rgba(112, 0, 255, 0.3);">Artificial Intelligence</span>
+                    <span class="hero-badge"
+                        style="background: rgba(0, 240, 255, 0.1); color: var(--neon-cyan); border: 1px solid rgba(0, 240, 255, 0.25);">NLP</span>
+                    <span class="hero-badge"
+                        style="background: rgba(0, 114, 255, 0.15); color: #3b82f6; border: 1px solid rgba(0, 114, 255, 0.3);">Python</span>
+                    <span class="hero-badge"
+                        style="background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3);">FastAPI</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project 1: AI PDF Summarizer -->
+        <section id="pdf-summarizer" style="padding: 40px 0;">
+            <div class="container">
+                <div class="glass-panel project-section-panel reveal">
+                    <div class="case-study-grid">
+                        <div>
+                            <h2 class="section-title" style="font-size: 2rem; margin-bottom: 15px;"><span>📄</span> AI PDF Summarizer</h2>
+                            <p style="color: var(--text-secondary); font-size: 0.98rem; line-height: 1.7; margin-bottom: 20px;">
+                                AI PDF Summarizer is an AI-powered application that extracts text from PDF documents and generates concise summaries. The project helps users quickly understand lengthy documents without reading the entire content, improving productivity and information retrieval.
+                            </p>
+
+                            <h3 style="font-family: var(--font-heading); font-size: 1.1rem; color: var(--text-primary);">Tech Stack</h3>
+                            <div class="tech-badge-list">
+                                <span class="tech-badge-item"><i class="fa-brands fa-python" style="color: #3b82f6;"></i> Python</span>
+                                <span class="tech-badge-item"><i class="fa-solid fa-brain" style="color: #a855f7;"></i> NLP</span>
+                                <span class="tech-badge-item"><i class="fa-solid fa-file-contract" style="color: #ec4899;"></i> Text Summarization</span>
+                                <span class="tech-badge-item"><i class="fa-brands fa-html5" style="color: #e34c26;"></i> HTML</span>
+                                <span class="tech-badge-item"><i class="fa-brands fa-css3-alt" style="color: #264de4;"></i> CSS</span>
+                                <span class="tech-badge-item"><i class="fa-brands fa-js" style="color: #f7df1e;"></i> JavaScript</span>
+                                <span class="tech-badge-item"><i class="fa-solid fa-bolt" style="color: #0d9488;"></i> FastAPI</span>
+                                <span class="tech-badge-item"><i class="fa-brands fa-git-alt" style="color: #f97316;"></i> Git</span>
+                                <span class="tech-badge-item"><i class="fa-brands fa-github"></i> GitHub</span>
+                                <span class="tech-badge-item"><i class="fa-solid fa-code" style="color: #007acc;"></i> VS Code</span>
+                            </div>
+
+                            <div style="margin-top: 25px;">
+                                <a href="https://github.com/PyarasaniUday/PDF-ANALYZER-AI" target="_blank" class="btn btn-primary">
+                                    <i class="fa-brands fa-github"></i> View Source Code
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Video Container -->
+                        <div class="browser-mockup">
+                            <div class="browser-header">
+                                <div class="browser-dots">
+                                    <span class="browser-dot red"></span>
+                                    <span class="browser-dot yellow"></span>
+                                    <span class="browser-dot green"></span>
+                                </div>
+                                <div class="browser-address">pdf-summarizer // Demonstration</div>
+                                <div style="width: 40px;"></div>
+                            </div>
+                            <div class="browser-body">
+                                <a href="https://youtu.be/_k8ZG49Y0M4?si=NEn7FsLunfku0Xl0" target="_blank" class="video-link-wrapper">
+                                    <img src="https://img.youtube.com/vi/_k8ZG49Y0M4/maxresdefault.jpg" alt="AI PDF Summarizer Demo" class="browser-img">
+                                    <div class="video-play-overlay">
+                                        <div class="play-btn-circle" style="width: 60px; height: 60px;">
+                                            <i class="fa-solid fa-play" style="font-size: 1.5rem; margin-left: 4px;"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project 2: FAQ Chatbot -->
+        <section id="faq-chatbot" style="padding: 40px 0;">
+            <div class="container">
+                <div class="glass-panel project-section-panel reveal">
+                    <div class="case-study-grid">
+                        <!-- Video Container (Alternate side for layout variety on desktop) -->
+                        <div class="browser-mockup" style="order: 2;">
+                            <div class="browser-header">
+                                <div class="browser-dots">
+                                    <span class="browser-dot red"></span>
+                                    <span class="browser-dot yellow"></span>
+                                    <span class="browser-dot green"></span>
+                                </div>
+                                <div class="browser-address">faq-chatbot // Demonstration</div>
+                                <div style="width: 40px;"></div>
+                            </div>
+                            <div class="browser-body">
+                                <a href="https://youtu.be/EMYfC6pkaGw?si=eH4PeH0xtIUcYYke" target="_blank" class="video-link-wrapper">
+                                    <img src="https://img.youtube.com/vi/EMYfC6pkaGw/maxresdefault.jpg" alt="FAQ Chatbot Demo" class="browser-img">
+                                    <div class="video-play-overlay">
+                                        <div class="play-btn-circle" style="width: 60px; height: 60px;">
+                                            <i class="fa-solid fa-play" style="font-size: 1.5rem; margin-left: 4px;"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div style="order: 1;">
+                            <h2 class="section-title" style="font-size: 2rem; margin-bottom: 15px;"><span>💬</span> FAQ Chatbot</h2>
+                            <p style="color: var(--text-secondary); font-size: 0.98rem; line-height: 1.7; margin-bottom: 20px;">
+                                FAQ Chatbot is an AI-powered conversational application designed to answer frequently asked questions instantly. The chatbot provides quick and accurate responses through a simple interactive interface, improving user support and accessibility.
+                            </p>
+
+                            <h3 style="font-family: var(--font-heading); font-size: 1.1rem; color: var(--text-primary);">Tech Stack</h3>
+                            <div class="tech-badge-list">
+                                <span class="tech-badge-item"><i class="fa-brands fa-python" style="color: #3b82f6;"></i> Python</span>
+                                <span class="tech-badge-item"><i class="fa-solid fa-brain" style="color: #a855f7;"></i> NLP</span>
+                                <span class="tech-badge-item"><i class="fa-brands fa-html5" style="color: #e34c26;"></i> HTML</span>
+                                <span class="tech-badge-item"><i class="fa-brands fa-css3-alt" style="color: #264de4;"></i> CSS</span>
+                                <span class="tech-badge-item"><i class="fa-brands fa-js" style="color: #f7df1e;"></i> JavaScript</span>
+                                <span class="tech-badge-item"><i class="fa-brands fa-git-alt" style="color: #f97316;"></i> Git</span>
+                                <span class="tech-badge-item"><i class="fa-brands fa-github"></i> GitHub</span>
+                                <span class="tech-badge-item"><i class="fa-solid fa-code" style="color: #007acc;"></i> VS Code</span>
+                            </div>
+
+                            <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+                                <a href="https://github.com/PyarasaniUday/FAQChatbot" target="_blank" class="btn btn-primary">
+                                    <i class="fa-brands fa-github"></i> View Source Code
+                                </a>
+                                <a href="https://codealpha-faqchatbot.onrender.com/" target="_blank" class="btn btn-secondary">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project 3: Language Translator -->
+        <section id="language-translator" style="padding: 40px 0;">
+            <div class="container">
+                <div class="glass-panel project-section-panel reveal">
+                    <div class="case-study-grid">
+                        <div>
+                            <h2 class="section-title" style="font-size: 2rem; margin-bottom: 15px;"><span>🌐</span> Language Translator</h2>
+                            <p style="color: var(--text-secondary); font-size: 0.98rem; line-height: 1.7; margin-bottom: 20px;">
+                                Language Translator is an AI-powered translation application that enables users to translate text between multiple languages instantly. The application provides a simple interface for breaking language barriers and improving communication across different languages.
+                            </p>
+
+                            <h3 style="font-family: var(--font-heading); font-size: 1.1rem; color: var(--text-primary);">Tech Stack</h3>
+                            <div class="tech-badge-list">
+                                <span class="tech-badge-item"><i class="fa-brands fa-python" style="color: #3b82f6;"></i> Python</span>
+                                <span class="tech-badge-item"><i class="fa-solid fa-brain" style="color: #a855f7;"></i> NLP</span>
+                                <span class="tech-badge-item"><i class="fa-brands fa-html5" style="color: #e34c26;"></i> HTML</span>
+                                <span class="tech-badge-item"><i class="fa-brands fa-css3-alt" style="color: #264de4;"></i> CSS</span>
+                                <span class="tech-badge-item"><i class="fa-brands fa-js" style="color: #f7df1e;"></i> JavaScript</span>
+                                <span class="tech-badge-item"><i class="fa-brands fa-git-alt" style="color: #f97316;"></i> Git</span>
+                                <span class="tech-badge-item"><i class="fa-brands fa-github"></i> GitHub</span>
+                                <span class="tech-badge-item"><i class="fa-solid fa-code" style="color: #007acc;"></i> VS Code</span>
+                            </div>
+
+                            <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
+                                <a href="https://github.com/PyarasaniUday/LanguageTranslator" target="_blank" class="btn btn-primary">
+                                    <i class="fa-brands fa-github"></i> View Source Code
+                                </a>
+                                <a href="https://codealpha-languagetranslator.onrender.com/" target="_blank" class="btn btn-secondary">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Video Container -->
+                        <div class="browser-mockup">
+                            <div class="browser-header">
+                                <div class="browser-dots">
+                                    <span class="browser-dot red"></span>
+                                    <span class="browser-dot yellow"></span>
+                                    <span class="browser-dot green"></span>
+                                </div>
+                                <div class="browser-address">language-translator // Demonstration</div>
+                                <div style="width: 40px;"></div>
+                            </div>
+                            <div class="browser-body">
+                                <a href="https://youtu.be/BunwRsnSbzg?si=s08vf-xT_AS57AyU" target="_blank" class="video-link-wrapper">
+                                    <img src="https://img.youtube.com/vi/BunwRsnSbzg/maxresdefault.jpg" alt="Language Translator Demo" class="browser-img">
+                                    <div class="video-play-overlay">
+                                        <div class="play-btn-circle" style="width: 60px; height: 60px;">
+                                            <i class="fa-solid fa-play" style="font-size: 1.5rem; margin-left: 4px;"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Back to Portfolio CTA -->
+        <section id="back-cta" style="padding: 60px 0; text-align: center;">
+            <div class="container">
+                <a href="index.html#projects" class="btn btn-secondary" style="padding: 14px 40px; font-size: 1.05rem;">
+                    <i class="fa-solid fa-arrow-left" style="margin-right: 8px;"></i> Back to Portfolio
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content"
+                style="padding-bottom: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.03);">
+                <div class="footer-text">
+                    &copy; 2026 <span>Pyarasani Uday Kumar</span>. Built with passion, consistency, and code.
+                </div>
+                <div class="footer-socials">
+                    <a href="https://www.linkedin.com/in/pyarasani-uday-kumar-9b9190366/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3B1h8UChZWR5uLgJzlyb17Gw%3D%3D"
+                        target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="https://github.com/PyarasaniUday" target="_blank" aria-label="GitHub"><i
+                            class="fa-brands fa-github"></i></a>
+                </div>
+            </div>
+            <div
+                style="margin-top: 15px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-size: 0.8rem; color: var(--text-secondary); font-family: var(--font-mono);">
+                <div>
+                    <i class="fa-regular fa-envelope" style="color: var(--neon-cyan); margin-right: 5px;"></i>
+                    Email: <a href="mailto:udaypyarasani02@gmail.com"
+                        style="color: inherit; text-decoration: none; transition: var(--transition-fast);"
+                        onmouseover="this.style.color='var(--neon-cyan)'"
+                        onmouseout="this.style.color='inherit'">udaypyarasani02@gmail.com</a>
+                </div>
+                <div>
+                    <i class="fa-brands fa-linkedin-in" style="color: var(--neon-cyan); margin-right: 5px;"></i>
+                    LinkedIn: <a
+                        href="https://www.linkedin.com/in/pyarasani-uday-kumar-9b9190366/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3B1h8UChZWR5uLgJzlyb17Gw%3D%3D"
+                        target="_blank"
+                        style="color: inherit; text-decoration: none; transition: var(--transition-fast);"
+                        onmouseover="this.style.color='var(--neon-cyan)'"
+                        onmouseout="this.style.color='inherit'">Connect on LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript File -->
+    <script src="script.js"></script>
+</body>
+
+</html>

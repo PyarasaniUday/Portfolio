@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Google Developer Program Journey of Pyarasani Uday Kumar. Learning, building, and growing within Google's developer ecosystem.">
+    <meta name="keywords"
+        content="Google Developer, Build with AI, Gemini, Google Cloud, Codelabs, GDG, AI, Machine Learning, Pyarasani Uday Kumar">
+    <meta name="author" content="Pyarasani Uday Kumar">
+    <title>Google Developer Journey | Achievements | Pyarasani Uday Kumar</title>
+
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        .details-hero {
+            padding-top: 140px;
+            padding-bottom: 60px;
+            text-align: center;
+            position: relative;
+            background: radial-gradient(circle at top, rgba(0, 240, 255, 0.05) 0%, transparent 70%);
+        }
+
+        .btn-back {
+            margin-bottom: 24px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--neon-cyan);
+            text-decoration: none;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            transition: var(--transition-fast);
+        }
+
+        .btn-back:hover {
+            text-shadow: 0 0 8px var(--neon-cyan);
+            transform: translateX(-4px);
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1.25fr 0.75fr;
+            gap: 45px;
+            margin-top: 40px;
+            align-items: start;
+        }
+
+        @media (max-width: 992px) {
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .details-card {
+            background: rgba(10, 11, 20, 0.65);
+            border: 1px solid rgba(0, 240, 255, 0.12);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            margin-bottom: 30px;
+        }
+
+        .highlight-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            transition: var(--transition-fast);
+        }
+
+        .highlight-item:hover {
+            border-color: rgba(0, 240, 255, 0.25);
+            background: rgba(0, 240, 255, 0.02);
+            color: var(--text-primary);
+            transform: translateX(4px);
+        }
+
+        .highlight-item i {
+            color: var(--neon-cyan);
+            font-size: 1.1rem;
+            text-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
+        }
+
+        /* Checkbox list styling for Learning Activities */
+        .activity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-top: 25px;
+            margin-bottom: 25px;
+        }
+
+        .activity-card {
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            transition: var(--transition-smooth);
+        }
+
+        .activity-card:hover {
+            border-color: rgba(0, 240, 255, 0.2);
+            background: rgba(0, 240, 255, 0.02);
+            transform: translateY(-2px);
+        }
+
+        .activity-icon-wrapper {
+            background: rgba(0, 240, 255, 0.08);
+            border: 1px solid rgba(0, 240, 255, 0.15);
+            border-radius: 6px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--neon-cyan);
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .activity-details h4 {
+            font-family: var(--font-heading);
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .activity-details p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        /* Timeline Styles */
+        .timeline-wrapper {
+            position: relative;
+            padding-left: 30px;
+            margin-top: 30px;
+        }
+
+        .timeline-wrapper::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 10px;
+            bottom: 10px;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--neon-cyan), var(--neon-blue), transparent);
+            opacity: 0.5;
+        }
+
+        .timeline-node {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .timeline-node::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--bg-base);
+            border: 2px solid var(--neon-cyan);
+            box-shadow: 0 0 8px var(--neon-cyan);
+            z-index: 5;
+            transition: var(--transition-fast);
+        }
+
+        .timeline-node:hover::before {
+            background: var(--neon-cyan);
+            box-shadow: 0 0 12px var(--neon-cyan);
+            transform: scale(1.2);
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 6px;
+        }
+
+        .timeline-title {
+            font-family: var(--font-heading);
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .timeline-date {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--neon-cyan);
+            background: rgba(0, 240, 255, 0.08);
+            border: 1px solid rgba(0, 240, 255, 0.15);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .timeline-desc {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Profile Showcase Window */
+        .window-mockup {
+            background: rgba(3, 3, 6, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .window-header {
+            background: rgba(10, 11, 20, 0.9);
+            padding: 10px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .window-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .window-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .window-title {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+        }
+
+        .window-body {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle, rgba(0, 114, 255, 0.03) 0%, transparent 80%);
+        }
+
+        .window-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 240, 255, 0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: var(--transition-smooth);
+            cursor: pointer;
+        }
+
+        .window-body img:hover {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 10px 35px rgba(0, 240, 255, 0.2);
+            transform: scale(1.02);
+        }
+
+        /* Lightbox modal styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            padding-top: 80px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(3, 3, 6, 0.96);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .lightbox-content {
+            margin: auto;
+            display: block;
+            max-width: 85%;
+            max-height: 75vh;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            box-shadow: 0 0 35px rgba(0, 240, 255, 0.25);
+            animation: zoomIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            object-fit: contain;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 30px;
+            right: 35px;
+            color: var(--text-secondary);
+            font-size: 38px;
+            font-weight: bold;
+            transition: var(--transition-fast);
+            cursor: pointer;
+            z-index: 2010;
+        }
+
+        .lightbox-close:hover {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        .lightbox-caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: var(--text-secondary);
+            padding: 20px 0;
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Interactive Canvas Particle Background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Sticky Navigation Bar -->
+    <header class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="index.html#home" class="logo" aria-label="Pyarasani Uday Kumar Portfolio Home">
+                <span>&lt;/&gt;</span> Uday Kumar
+            </a>
+
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle Navigation Menu" aria-controls="nav-links"
+                aria-expanded="false">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#skills">Skills</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#education">Education</a></li>
+                <li><a href="index.html#achievements" class="active">Achievements</a></li>
+                <li><a href="index.html#certifications">Certifications</a></li>
+                <li><a href="index.html#experience">Goals</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="details-hero">
+            <div class="container">
+                <a href="index.html#achievements" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Back to
+                    Achievements</a>
+                <h1 class="text-neon-glow"
+                    style="font-family: var(--font-heading); font-size: 3rem; line-height: 1.2; font-weight: 700; margin-bottom: 15px;">
+                    Google Developer Program
+                </h1>
+                <p
+                    style="font-family: var(--font-mono); color: var(--neon-cyan); font-size: 1.1rem; max-width: 700px; margin: 0 auto;">
+                    Learning, building, and growing within Google's developer ecosystem.
+                </p>
+            </div>
+        </section>
+
+        <!-- Main Content -->
+        <section style="padding-top: 0;">
+            <div class="container">
+                <div class="details-grid">
+
+                    <!-- Left: Description, Activities & Mockup -->
+                    <div class="reveal">
+                        <div class="glass-panel details-card">
+                            <h2
+                                style="font-family: var(--font-heading); font-size: 1.6rem; font-weight: 600; color: var(--text-primary); margin-bottom: 20px;">
+                                Journey Overview
+                            </h2>
+                            <p
+                                style="color: var(--text-secondary); font-size: 1.05rem; line-height: 1.7; margin-bottom: 25px;">
+                                As a member of the Google Developer Program, I actively participate in developer-focused
+                                learning experiences, AI workshops, community initiatives, and hands-on technical
+                                activities. These experiences have helped me explore modern AI technologies, developer
+                                tools, Gemini, and real-world applications of emerging technologies.
+                            </p>
+
+                            <h3
+                                style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 600; color: var(--text-primary); margin-bottom: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 10px;">
+                                Active Learning Activities
+                            </h3>
+                            <div class="activity-grid">
+                                <!-- Activity 1 -->
+                                <div class="activity-card">
+                                    <div class="activity-icon-wrapper"><i
+                                            class="fa-solid fa-square-poll-horizontal"></i></div>
+                                    <div class="activity-details">
+                                        <h4>Build with AI Programs</h4>
+                                        <p>Hands-on labs on Gemini API, model fine-tuning, and prompt design.</p>
+                                    </div>
+                                </div>
+                                <!-- Activity 2 -->
+                                <div class="activity-card">
+                                    <div class="activity-icon-wrapper"><i class="fa-solid fa-graduation-cap"></i></div>
+                                    <div class="activity-details">
+                                        <h4>Google AI Learning Modules</h4>
+                                        <p>Interactive codelabs covering neural nets, LLMs, and agent workflows.</p>
+                                    </div>
+                                </div>
+                                <!-- Activity 3 -->
+                                <div class="activity-card">
+                                    <div class="activity-icon-wrapper"><i class="fa-solid fa-flask"></i></div>
+                                    <div class="activity-details">
+                                        <h4>Google Codelabs</h4>
+                                        <p>Interactive tutorials to build responsive apps using Google Cloud APIs.</p>
+                                    </div>
+                                </div>
+                                <!-- Activity 4 -->
+                                <div class="activity-card">
+                                    <div class="activity-icon-wrapper"><i class="fa-solid fa-compass"></i></div>
+                                    <div class="activity-details">
+                                        <h4>Antigravity Tool Exploration</h4>
+                                        <p>Practical experimentation utilizing development tools & integrations.</p>
+                                    </div>
+                                </div>
+                                <!-- Activity 5 -->
+                                <div class="activity-card">
+                                    <div class="activity-icon-wrapper"><i class="fa-solid fa-sparkles"></i></div>
+                                    <div class="activity-details">
+                                        <h4>Gemini Learning Activities</h4>
+                                        <p>Exploring multi-turn dialogue models, prompt engineering, and LLM
+                                            integrations.</p>
+                                    </div>
+                                </div>
+                                <!-- Activity 6 -->
+                                <div class="activity-card">
+                                    <div class="activity-icon-wrapper"><i class="fa-solid fa-users-viewfinder"></i>
+                                    </div>
+                                    <div class="activity-details">
+                                        <h4>Developer Challenges</h4>
+                                        <p>Participating in community events and hackathons to prototype digital
+                                            solutions.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h3
+                                style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 600; color: var(--text-primary); margin-top: 30px; margin-bottom: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 10px;">
+                                Profile & Badge Gallery
+                            </h3>
+                            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 15px;">
+                                Below is the official Google Developer Program Profile displaying active credentials and
+                                achievements.
+                            </p>
+
+                            <!-- Profile Mockup Window -->
+                            <div class="window-mockup">
+                                <div class="window-header">
+                                    <div class="window-dots">
+                                        <span class="window-dot" style="background: #ef4444;"></span>
+                                        <span class="window-dot" style="background: #eab308;"></span>
+                                        <span class="window-dot" style="background: #22c55e;"></span>
+                                    </div>
+                                    <div class="window-title">google_developer_profile.png</div>
+                                    <div style="width: 42px;"></div> <!-- Spacer -->
+                                </div>
+                                <div class="window-body">
+                                    <img src="Achievements_Images/google developer program.png"
+                                        alt="Google Developer Program Profile and Badges Summary" class="gallery-img">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Highlights & Timeline -->
+                    <div class="reveal reveal-delay-1">
+                        <div class="glass-panel details-card">
+                            <h2
+                                style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 600; color: var(--text-primary); margin-bottom: 20px;">
+                                Highlights
+                            </h2>
+                            <div class="highlights-list" style="margin-bottom: 35px;">
+                                <div class="highlight-item">
+                                    <i class="fa-solid fa-square-check"></i>
+                                    <span>Google Developer Program Member</span>
+                                </div>
+                                <div class="highlight-item">
+                                    <i class="fa-solid fa-square-check"></i>
+                                    <span>Build with AI 2026 Participant</span>
+                                </div>
+                                <div class="highlight-item">
+                                    <i class="fa-solid fa-square-check"></i>
+                                    <span>Google Developer Group Discovery Badge</span>
+                                </div>
+                                <div class="highlight-item">
+                                    <i class="fa-solid fa-square-check"></i>
+                                    <span>Gemini Enterprise Agent Ready Badge</span>
+                                </div>
+                                <div class="highlight-item">
+                                    <i class="fa-solid fa-square-check"></i>
+                                    <span>Premium Tier Member Status</span>
+                                </div>
+                            </div>
+
+                            <h2
+                                style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 600; color: var(--text-primary); margin-bottom: 20px;">
+                                Badge Timeline
+                            </h2>
+
+                            <!-- Timeline Section -->
+                            <div class="timeline-wrapper">
+                                <!-- Milestone 1 -->
+                                <div class="timeline-node">
+                                    <div class="timeline-header">
+                                        <span class="timeline-title">Developer Program Member</span>
+                                        <span class="timeline-date">Jan 2025</span>
+                                    </div>
+                                    <p class="timeline-desc">Joined Google's developer ecosystem to access APIs,
+                                        documentation, and technical forums.</p>
+                                </div>
+                                <!-- Milestone 2 -->
+                                <div class="timeline-node">
+                                    <div class="timeline-header">
+                                        <span class="timeline-title">GDG Discovery Badge</span>
+                                        <span class="timeline-date">Feb 2025</span>
+                                    </div>
+                                    <p class="timeline-desc">Earned by connecting with local GDG community meetups and
+                                        active group participation.</p>
+                                </div>
+                                <!-- Milestone 3 -->
+                                <div class="timeline-node">
+                                    <div class="timeline-header">
+                                        <span class="timeline-title">Build with AI Participant</span>
+                                        <span class="timeline-date">Feb 2026</span>
+                                    </div>
+                                    <p class="timeline-desc">Participated in hands-on workshops focused on prototyping
+                                        Gemini applications.</p>
+                                </div>
+                                <!-- Milestone 4 -->
+                                <div class="timeline-node">
+                                    <div class="timeline-header">
+                                        <span class="timeline-title">Gemini Enterprise Agent Ready</span>
+                                        <span class="timeline-date">Mar 2026</span>
+                                    </div>
+                                    <p class="timeline-desc">Earned by completing Google modules focused on building
+                                        Enterprise agents with LLMs.</p>
+                                </div>
+                                <!-- Milestone 5 -->
+                                <div class="timeline-node">
+                                    <div class="timeline-header">
+                                        <span class="timeline-title">Premium Tier Membership</span>
+                                        <span class="timeline-date">May 2026</span>
+                                    </div>
+                                    <p class="timeline-desc">Awarded premium status in the Developer Ecosystem for
+                                        consistent engagement.</p>
+                                </div>
+                            </div>
+
+                            <div style="margin-top: 30px;">
+                                <a href="https://me.developers.google.com/u/114617271991018126907" target="_blank"
+                                    class="btn btn-primary" style="width: 100%;">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> View Google Developer Profile
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Footer back button -->
+                <div style="margin-top: 50px; text-align: center;" class="reveal">
+                    <a href="index.html#achievements" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i>
+                        Back to Portfolio</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close" id="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img" src="" alt="">
+        <div id="lightbox-caption" class="lightbox-caption"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content"
+                style="padding-bottom: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.03);">
+                <div class="footer-text">
+                    &copy; 2026 <span>Pyarasani Uday Kumar</span>. Built with passion, consistency, and code.
+                </div>
+                <div class="footer-socials">
+                    <a href="https://www.linkedin.com/in/pyarasani-uday-kumar-9b9190366/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3B1h8UChZWR5uLgJzlyb17Gw%3D%3D"
+                        target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="https://github.com/PyarasaniUday" target="_blank" aria-label="GitHub"><i
+                            class="fa-brands fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Lightbox Modal Logic
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxCaption = document.getElementById('lightbox-caption');
+            const closeBtn = document.getElementById('lightbox-close');
+
+            document.querySelectorAll('.gallery-img').forEach(img => {
+                img.style.cursor = 'pointer';
+                img.addEventListener('click', () => {
+                    lightbox.style.display = 'block';
+                    lightboxImg.src = img.src;
+                    lightboxCaption.textContent = img.alt || 'Google Developer Program Achievement';
+                });
+            });
+
+            closeBtn.addEventListener('click', () => {
+                lightbox.style.display = 'none';
+            });
+
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox || e.target === closeBtn) {
+                    lightbox.style.display = 'none';
+                }
+            });
+
+            // Close lightbox on Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && lightbox.style.display === 'block') {
+                    lightbox.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
