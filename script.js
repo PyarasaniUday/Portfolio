@@ -410,4 +410,53 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    /* ==========================================
+       9. PROFILE IMAGE LIGHTBOX MODAL LOGIC
+       ========================================== */
+    const profileAvatar = document.getElementById('profile-avatar');
+    const profileModal = document.getElementById('profile-modal');
+    const profileModalClose = document.getElementById('profile-modal-close');
+
+    if (profileAvatar && profileModal) {
+        // Open Profile Modal function
+        function openProfileModal() {
+            profileModal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Lock background scrolling
+        }
+
+        // Close Profile Modal function
+        function closeProfileModal() {
+            profileModal.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+
+        // Bind click event to profile avatar
+        profileAvatar.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openProfileModal();
+        });
+
+        // Close button click
+        if (profileModalClose) {
+            profileModalClose.addEventListener('click', (e) => {
+                e.stopPropagation();
+                closeProfileModal();
+            });
+        }
+
+        // Outside click (backdrop click)
+        profileModal.addEventListener('click', (e) => {
+            if (e.target === profileModal) {
+                closeProfileModal();
+            }
+        });
+
+        // Escape key close
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && profileModal.classList.contains('active')) {
+                closeProfileModal();
+            }
+        });
+    }
 });
